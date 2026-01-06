@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agurutwa | Lighting Minds, Shaping Futures</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Patrick+Hand&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+    <!-- Anime.js for smooth animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'paper': '#fdfbf7',
+                        'ink': '#2c2c2c',
+                        'accent-orange': '#e88d67',
+                        'accent-yellow': '#f3d250',
+                        'accent-blue': '#90ccf4',
+                        'accent-green': '#5da2d5',
+                    },
+                    fontFamily: {
+                        'hand': ['"Patrick Hand"', 'cursive'],
+                        'flower': ['"Indie Flower"', 'cursive'],
+                        'body': ['"Merriweather"', 'serif'],
+                    },
+                    backgroundImage: {
+                        'watercolor': "url('https://www.transparenttextures.com/patterns/watercolor.png')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Artistic Styles */
+        body {
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d1d5db' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+            overflow-x: hidden;
+            color: #2c2c2c;
+        }
+
+        .blob-shape {
+            position: absolute;
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.6;
+            animation: morph 8s ease-in-out infinite;
+        }
+
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .text-shadow-hand {
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+
+        /* Polaroid Card Effect */
+        .polaroid {
+            background: white;
+            padding: 1rem;
+            padding-bottom: 3rem;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.15);
+            transform: rotate(-2deg);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        .polaroid::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 11;
+            /* Tape look */
+            background-image: linear-gradient(45deg, rgba(255,255,255,0.8) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.8) 75%, transparent 75%, transparent);
+            background-size: 10px 10px;
+            opacity: 0.6;
+        }
+
+        /* Crayon Progress Bar */
+        .crayon-container {
+            position: relative;
+            height: 25px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 15px;
+            margin-top: 10px;
+            overflow: visible;
+        }
+
+        .crayon-fill {
+            height: 100%;
+            border-radius: 15px 0 0 15px;
+            position: relative;
+            width: 0%; 
+            transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .crayon-tip {
+            position: absolute;
+            right: -10px;
+            top: 0;
+            width: 0; 
+            height: 0; 
+            border-top: 12.5px solid transparent;
+            border-bottom: 12.5px solid transparent;
+            border-left: 15px solid; 
+        }
+
+        /* Scribble underline */
+        .scribble-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .scribble-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 8px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q 5 20, 10 10 T 20 10 T 30 10 T 40 10 T 50 10 T 60 10 T 70 10 T 80 10 T 90 10 T 100 10' stroke='%23e88d67' stroke-width='4' fill='none'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fdfbf7; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e88d67; 
+            border-radius: 10px;
+        }
+
+        /* Hand drawn borders */
+        .hand-border {
+            border: 3px solid #2c2c2c;
+            border-radius: 2% 6% 5% 4% / 1% 1% 2% 4%;
+            box-shadow: 4px 4px 0px #2c2c2c;
+        }
+        
+        /* Reveal animation class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Paper tear effect bottom */
+        .paper-tear {
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0 L5 10 L10 0 L15 10 L20 0 L25 10 L30 0 L35 10 L40 0 L45 10 L50 0 L55 10 L60 0 L65 10 L70 0 L75 10 L80 0 L85 10 L90 0 L95 10 L100 0 V20 H0 Z' fill='%23fdfbf7'/%3E%3C/svg%3E");
+            background-size: 20px 20px;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body class="font-body text-ink selection:bg-accent-yellow selection:text-ink">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 p-2 md:p-4 transition-all duration-300" id="navbar">
+        <div class="container mx-auto flex justify-between items-center bg-white/80 backdrop-blur-sm hand-border px-4 md:px-6 py-2 md:py-3 relative">
+            <div class="text-2xl md:text-3xl font-flower font-bold text-accent-orange z-50">
+                <i class="fas fa-child-reaching mr-2"></i>Agurutwa
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 font-hand text-xl items-center">
+                <a href="#home" class="hover:text-accent-orange transition-colors">Home</a>
+                <a href="#mission" class="hover:text-accent-orange transition-colors">Our Promise</a>
+                <a href="#portfolio" class="hover:text-accent-orange transition-colors">Gallery</a>
+                <a href="#impact" class="hover:text-accent-orange transition-colors">Impact</a>
+                <button class="bg-ink text-white font-hand text-xl px-4 py-2 rounded-lg hover:bg-accent-orange transition-colors shadow-lg transform hover:-rotate-2">
+                    Donate Love <i class="fas fa-heart ml-1 text-red-400"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="md:hidden z-50">
+                <button id="mobile-menu-btn" class="text-ink text-2xl focus:outline-none p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-paper border-b-2 border-ink shadow-lg flex-col p-6 space-y-6 font-hand text-xl text-center md:hidden z-40 transform origin-top animate-fade-in-down">
+                <a href="#home" class="block hover:text-accent-orange transition-colors mobile-link">Home</a>
+                <a href="#mission" class="block hover:text-accent-orange transition-colors mobile-link">Our Promise</a>
+                <a href="#portfolio" class="block hover:text-accent-orange transition-colors mobile-link">Gallery</a>
+                <a href="#impact" class="block hover:text-accent-orange transition-colors mobile-link">Impact</a>
+                <button class="w-full bg-ink text-white font-hand text-xl px-4 py-3 rounded-lg hover:bg-accent-orange transition-colors shadow-lg">
+                    Donate Love <i class="fas fa-heart ml-1 text-red-400"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-20 pb-12">
+        <!-- Artistic Blobs -->
+        <div class="blob-shape bg-accent-yellow w-64 h-64 md:w-96 md:h-96 top-20 left-[-20px] md:top-10 md:left-[-50px]"></div>
+        <div class="blob-shape bg-accent-blue w-64 h-64 md:w-80 md:h-80 bottom-20 right-[-20px] md:right-[-40px] animation-delay-2000"></div>
+        <div class="blob-shape bg-accent-orange w-48 h-48 md:w-64 md:h-64 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-30"></div>
+
+        <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div class="text-center md:text-left space-y-6 order-2 md:order-1">
+                <span class="inline-block bg-accent-yellow px-3 py-1 font-hand text-lg transform -rotate-2 rounded-sm shadow-sm">
+                    Established for the Future
+                </span>
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-flower font-bold leading-tight">
+                    Lighting the Lamp of <span class="scribble-underline text-accent-orange">Knowledge</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 italic">
+                    "Every child deserves a page in the book of life. We provide the ink."
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4 w-full">
+                    <a href="#portfolio" class="bg-accent-orange text-white font-hand text-xl md:text-2xl px-8 py-3 rounded-full shadow-lg hover:scale-105 transition-transform text-center transform rotate-1 w-full sm:w-auto">
+                        See Our Journey
+                    </a>
+                    <a href="#mission" class="border-2 border-ink text-ink font-hand text-xl md:text-2xl px-8 py-3 rounded-full hover:bg-ink hover:text-white transition-all text-center transform -rotate-1 w-full sm:w-auto">
+                        Why Agurutwa?
+                    </a>
+                </div>
+            </div>
+            <div class="relative order-1 md:order-2">
+                <!-- Abstract Image Collage -->
+                <div class="relative z-10 w-full max-w-sm md:max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-all duration-500">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Children Studying" class="hand-border bg-white p-2 w-full object-cover h-64 md:h-96 grayscale hover:grayscale-0 transition-all duration-700">
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-4 -right-4 md:-top-6 md:-right-6 text-5xl md:text-6xl text-accent-yellow opacity-80 animate-bounce">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="absolute -bottom-6 -left-4 md:-bottom-8 md:-left-8 bg-white p-3 md:p-4 shadow-lg font-hand text-lg md:text-xl transform -rotate-6 hand-border">
+                        <p>Agurutwa</p>
+                        <p class="text-sm text-gray-500">Since 2015</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 w-full hidden md:block">
+            <svg viewBox="0 0 1440 320" class="w-full text-white fill-current">
+                <path fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,197.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="py-12 md:py-20 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 md:mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-flower font-bold text-ink mb-4">The Agurutwa Promise</h2>
+                <div class="w-24 h-1 bg-accent-orange mx-auto rounded-full"></div>
+                <p class="mt-4 text-lg md:text-xl font-hand text-gray-600 max-w-2xl mx-auto px-2">
+                    Agurutwa means <span class="text-accent-orange font-bold">"Anti-Gravity"</span>. We lift dreams against the heavy pull of poverty, helping children soar.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12 md:gap-8">
+                <!-- Card 1 -->
+                <div class="group relative p-8 bg-paper rounded-2xl border-dashed border-2 border-gray-300 hover:border-accent-green transition-all hover:-translate-y-2 reveal">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-accent-green text-white w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-hand font-bold text-center mb-3">Free Education</h3>
+                    <p class="text-center text-gray-600 text-sm leading-relaxed">
+                        Providing textbooks, tuition, and stationary to children living in slums who cannot afford regular schooling.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group relative p-8 bg-paper rounded-2xl border-dashed border-2 border-gray-300 hover:border-accent-yellow transition-all hover:-translate-y-2 reveal" style="transition-delay: 100ms;">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-accent-yellow text-ink w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-hand font-bold text-center mb-3">Nutrition</h3>
+                    <p class="text-center text-gray-600 text-sm leading-relaxed">
+                        An empty stomach cannot learn. We provide healthy mid-day meals to ensure focus and health.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group relative p-8 bg-paper rounded-2xl border-dashed border-2 border-gray-300 hover:border-accent-orange transition-all hover:-translate-y-2 reveal" style="transition-delay: 200ms;">
+                    <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-accent-orange text-white w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="mt-6 text-2xl font-hand font-bold text-center mb-3">Holistic Growth</h3>
+                    <p class="text-center text-gray-600 text-sm leading-relaxed">
+                        Art, music, and sports workshops to foster creativity and confidence beyond standard academics.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Gallery (Polaroids) -->
+    <section id="portfolio" class="py-12 md:py-24 bg-paper relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: radial-gradient(#2c2c2c 1px, transparent 1px); background-size: 20px 20px;"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 md:mb-12 reveal">
+                <div class="text-center md:text-left w-full">
+                    <h2 class="text-4xl md:text-6xl font-flower font-bold text-ink">Glimpses of Hope</h2>
+                    <p class="font-hand text-xl text-accent-orange mt-2">Captured moments of change.</p>
+                </div>
+                <div class="hidden md:block">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2909/2909805.png" alt="Doodle arrow" class="w-24 opacity-50 transform rotate-180">
+                </div>
+            </div>
+
+            <!-- The Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pt-8">
+                
+                <!-- Polaroid 1 -->
+                <div class="polaroid reveal rotate-3 hover:rotate-0 mx-auto max-w-sm w-full">
+                    <div class="h-64 overflow-hidden bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Classroom Smile" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div class="pt-4 font-hand text-center">
+                        <p class="text-xl font-bold">First Day of School</p>
+                        <p class="text-gray-500 text-sm">June 2023 • Bangalore</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid reveal -rotate-2 hover:rotate-0 mx-auto max-w-sm w-full" style="transition-delay: 100ms;">
+                    <div class="h-64 overflow-hidden bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Reading" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div class="pt-4 font-hand text-center">
+                        <p class="text-xl font-bold">The Reading Nook</p>
+                        <p class="text-gray-500 text-sm">Community Library</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid reveal rotate-1 hover:rotate-0 mx-auto max-w-sm w-full" style="transition-delay: 200ms;">
+                    <div class="h-64 overflow-hidden bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1529390003868-6c01d73923f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Art Class" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div class="pt-4 font-hand text-center">
+                        <p class="text-xl font-bold">Colors of Joy</p>
+                        <p class="text-gray-500 text-sm">Art Workshop</p>
+                    </div>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid reveal -rotate-3 hover:rotate-0 mx-auto max-w-sm w-full" style="transition-delay: 300ms;">
+                    <div class="h-64 overflow-hidden bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Street Teaching" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                    </div>
+                    <div class="pt-4 font-hand text-center">
+                        <p class="text-xl font-bold">Street Academy</p>
+                        <p class="text-gray-500 text-sm">Reaching the unreached</p>
+                    </div>
+                </div>
+
+                 <!-- Quote Card -->
+                 <div class="polaroid reveal rotate-2 bg-accent-yellow flex items-center justify-center p-6 text-center mx-auto max-w-sm w-full min-h-[300px]" style="transition-delay: 400ms;">
+                    <div>
+                        <i class="fas fa-quote-left text-4xl text-ink opacity-20 mb-2"></i>
+                        <p class="font-flower text-2xl font-bold leading-tight">"Education is the most powerful weapon which you can use to change the world."</p>
+                        <p class="font-hand mt-4 text-right">- Nelson Mandela</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Paper Tear -->
+        <div class="paper-tear"></div>
+    </section>
+
+    <!-- Impact Stats (Crayons) -->
+    <section id="impact" class="py-12 md:py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-3xl md:text-4xl font-flower font-bold text-center mb-12 reveal">Our Colored Impact</h2>
+            
+            <!-- Stat 1 -->
+            <div class="mb-8 reveal">
+                <div class="flex justify-between font-hand text-lg md:text-xl mb-1">
+                    <span>Children Educated</span>
+                    <span class="font-bold">1,250+</span>
+                </div>
+                <div class="crayon-container">
+                    <div class="crayon-fill bg-accent-orange" style="width: 0%" data-width="85%">
+                        <div class="crayon-tip text-accent-orange" style="border-left-color: #e88d67;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stat 2 -->
+            <div class="mb-8 reveal">
+                <div class="flex justify-between font-hand text-lg md:text-xl mb-1">
+                    <span>Meals Served</span>
+                    <span class="font-bold">15,000+</span>
+                </div>
+                <div class="crayon-container">
+                    <div class="crayon-fill bg-accent-green" style="width: 0%" data-width="95%">
+                        <div class="crayon-tip text-accent-green" style="border-left-color: #5da2d5;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stat 3 -->
+            <div class="mb-8 reveal">
+                <div class="flex justify-between font-hand text-lg md:text-xl mb-1">
+                    <span>Volunteers Joined</span>
+                    <span class="font-bold">300+</span>
+                </div>
+                <div class="crayon-container">
+                    <div class="crayon-fill bg-accent-yellow" style="width: 0%" data-width="60%">
+                        <div class="crayon-tip text-accent-yellow" style="border-left-color: #f3d250;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 reveal">
+                <p class="font-flower text-xl md:text-2xl mb-4">"The drawing is not finished yet..."</p>
+                <a href="#" class="inline-block border-2 border-dashed border-ink px-6 py-3 font-hand text-xl rounded-lg hover:bg-ink hover:text-white transition-colors w-full sm:w-auto">
+                    Help us color more lives
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-paper pt-12 md:pt-16 pb-8 border-t-4 border-accent-orange">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="text-center md:text-left">
+                    <h3 class="font-flower text-3xl font-bold mb-4">Agurutwa</h3>
+                    <p class="font-hand text-lg text-gray-600">
+                        Crafting futures, one child at a time. Join our family and be the reason someone smiles today.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <h4 class="font-hand text-xl font-bold mb-4 border-b-2 border-accent-yellow inline-block">Contact</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><i class="fas fa-envelope mr-2"></i> hello@agurutwa.org</li>
+                        <li><i class="fas fa-phone mr-2"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Bangalore, India</li>
+                    </ul>
+                </div>
+                <div class="text-center md:text-right">
+                    <h4 class="font-hand text-xl font-bold mb-4 border-b-2 border-accent-blue inline-block">Follow the Journey</h4>
+                    <div class="flex justify-center md:justify-end space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center hover:bg-accent-orange transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center hover:bg-accent-orange transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-ink text-white flex items-center justify-center hover:bg-accent-orange transition-colors"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-8 border-t border-gray-200">
+                <p class="font-hand text-gray-500">© 2024 Agurutwa Foundation. Designed with <i class="fas fa-heart text-red-400"></i> & Creativity.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        const nav = document.getElementById('navbar');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+            
+            // Toggle icon
+            const icon = btn.querySelector('i');
+            if(menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                nav.classList.remove('bg-paper');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                nav.classList.add('bg-paper'); // Ensure solid bg when menu is open
+            }
+        });
+
+        // Close mobile menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+                const icon = btn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Scroll Animation Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            const crayons = document.querySelectorAll('.crayon-fill');
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        
+                        // Check if it's a crayon bar inside the revealed section
+                        const bar = entry.target.querySelector('.crayon-fill');
+                        if (bar) {
+                            setTimeout(() => {
+                                bar.style.width = bar.getAttribute('data-width');
+                            }, 200);
+                        } else if(entry.target.classList.contains('crayon-fill')) {
+                             // Direct crayon observation (fallback)
+                             entry.target.style.width = entry.target.getAttribute('data-width');
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(element => scrollObserver.observe(element));
+            
+            // Observe crayon fills directly for more accurate triggering
+            crayons.forEach(element => {
+                const parent = element.closest('.reveal');
+                if(!parent) scrollObserver.observe(element);
+            });
+
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('py-2');
+                    nav.classList.remove('md:p-4');
+                    // Add solid background on scroll
+                    nav.querySelector('div').classList.add('bg-white/95');
+                    nav.querySelector('div').classList.remove('bg-white/80');
+                } else {
+                    nav.classList.add('md:p-4');
+                    nav.classList.remove('py-2');
+                    nav.querySelector('div').classList.remove('bg-white/95');
+                    nav.querySelector('div').classList.add('bg-white/80');
+                }
+            });
+        });
+
+        // Simple smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement){
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
